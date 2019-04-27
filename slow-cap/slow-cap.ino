@@ -1,4 +1,4 @@
-const int capLen = 100;
+const int capLen = 40;
 
 int driver = PA7;
 int sensor = PA6;
@@ -11,26 +11,40 @@ void setup() {
 
 int highReading, lowReading;
 int sum;
-int samples[capLen];
+int upSamples[capLen];
+int downSamples[capLen];
 
 void loop() {
+	pinMode(sensor, OUTPUT);
+	digitalWrite(sensor, LOW);
+	delay(1);
+	pinMode(sensor, INPUT);
+
   digitalWrite(driver, HIGH);
   for (int i = 0; i < capLen; i++) {
-		samples[i] = analogRead(sensor);
+		upSamples[i] = analogRead(sensor);
     delayMicroseconds(10);
   }
+
+	pinMode(sensor, OUTPUT);
+	digitalWrite(sensor, HIGH);
+	delay(1);
+	pinMode(sensor, INPUT);
 
   digitalWrite(driver, LOW);
   for (int i = 0; i < capLen; i++) {
-    samples[i] -= analogRead(sensor);
+    downSamples[i] = analogRead(sensor);
     delayMicroseconds(10);
   }
 
   for (int i = 0; i < capLen; i++) {
-		Serial.println(samples[i]);
+		Serial.println(upSamples[i]);
 		delay(10);
 	}
 
-	delay(1000);
+  for (int i = 0; i < capLen; i++) {
+		Serial.println(downSamples[i]);
+		delay(10);
+	}
 
 }

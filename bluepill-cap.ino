@@ -1,5 +1,5 @@
-const int avgLen = 10;
-const int delayTime = 20; // Microseconds
+const int avgLen = 1;
+const int delayTime = 400; // Microseconds
 
 int driver = PA7;
 int sensor = PA6;
@@ -32,20 +32,5 @@ void loop() {
   }
   Serial.println(sum);
 
-  delay(50);
-
-  /*
-  for (int i = 0; i < 100; i++) {
-    Serial.println(analogRead(sensor));
-    delayMicroseconds(10);
-  }
-  
-  
-
-  digitalWrite(driver, LOW);
-  for (int i = 0; i < 100; i++) {
-    Serial.println(analogRead(sensor));
-    delayMicroseconds(10);
-  }
-  */
+  delay(10);
 }
