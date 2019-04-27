@@ -1,4 +1,5 @@
 const int avgLen = 10;
+const int delayTime = 20; // Microseconds
 
 int driver = PA7;
 int sensor = PA6;
@@ -17,10 +18,10 @@ void loop() {
   sum = 0;
   for (int i = 0; i < avgLen; i++) {
     digitalWrite(driver, HIGH);
-    delayMicroseconds(1000);
+    delayMicroseconds(delayTime);
     highReading = analogRead(sensor);
     digitalWrite(driver, LOW);
-    delayMicroseconds(1000);
+    delayMicroseconds(delayTime);
     lowReading = analogRead(sensor);
     /*
     samples[i] = highReading - lowReading;
@@ -30,6 +31,9 @@ void loop() {
     sum += (highReading - lowReading);
   }
   Serial.println(sum);
+
+  delay(50);
+
   /*
   for (int i = 0; i < 100; i++) {
     Serial.println(analogRead(sensor));
