@@ -12,7 +12,7 @@ class LaserViewer():
 		self.ts = []
 		self.max_len = 100
 		self.cap = cv2.VideoCapture(0)
-
+		self.cap.set(cv2.CAP_PROP_FPS, 60)
 		style.use('fivethirtyeight')
 
 		fig = plt.figure()
