@@ -2,7 +2,6 @@ clearvars -except x y
 fs = 115.99;
 newDataLength = 5000;
 newFs = fs*(newDataLength/length(x));
-
 freqData = fftshift(abs(fft(x)));
 freq = linspace(-fs/2,fs/2,length(freqData));
 [~,zeroFreq] = max(freqData);
@@ -46,9 +45,14 @@ for i = 2:length(shiftSignal)
 end
 output = [];
 for j = 2:length(zeroXings)
-    output = [output,sign(mean(shiftSignal(zeroXings(j-1):zeroXings(j),1)))];
+    output = [output,sign(mean(shiftSignal(j-1:j,1)));
 end
 figure
 plot([1:length(shiftSignal)]./newFs,shiftSignal,'k')
 hold on
 plot(zeroXings/newFs,zeros(length(zeroXings),1),'o')
+
+% 
+% %moreFreq = linspace(-fs/2,fs/2,length(freqDemod));
+% figure
+% plot(freq,freqDemod)
