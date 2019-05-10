@@ -8,12 +8,12 @@ import time
 
 
 class LaserViewer:
-    def __init__(self):
+    def __init__(self, stream):
         self.xs = []
         self.ys = []
         self.ts = []
         self.max_len = 100
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(stream)
         self.cap.set(cv2.CAP_PROP_FPS, 60)
         style.use("fivethirtyeight")
 
@@ -71,7 +71,7 @@ class LaserViewer:
         # cv2.imshow('mask',mask)
 
 
-lv = LaserViewer()
+lv = LaserViewer("laser1.mp4")
 
 
 # When everything done, release the capture
