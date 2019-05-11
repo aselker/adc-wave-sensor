@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import style
 import time
+import sys
 
 
 class LaserViewer:
@@ -14,7 +15,7 @@ class LaserViewer:
         self.ts = []
         self.max_len = 100
         self.cap = cv2.VideoCapture(stream)
-        self.cap.set(cv2.CAP_PROP_FPS, 60)
+        self.cap.set(cv2.CAP_PROP_FPS, 120)
         style.use("fivethirtyeight")
 
         fig = plt.figure()
@@ -71,7 +72,7 @@ class LaserViewer:
         # cv2.imshow('mask',mask)
 
 
-lv = LaserViewer("laser1.mp4")
+lv = LaserViewer(sys.argv[1])
 
 
 # When everything done, release the capture
