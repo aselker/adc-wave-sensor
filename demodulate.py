@@ -64,9 +64,20 @@ plt.plot(freqs, np.fft.rfft(ys))
 plt.show()
 """
 
-filt = sig.butter(5, (3 / fs), analog=False)
+filt = sig.butter(5, (5 / fs), analog=False)
 ys_f = sig.lfilter(filt[0], filt[1], ys)
-# plt.plot(ts, xs / 5)
-# plt.plot(ts, carrier * 10)
-plt.plot(ts, ys_f)
+
+
+def adj(xs):
+    return (np.array(xs) - np.mean(xs)) / np.var(xs)
+
+
+def plot(xs):
+    plt.plot(ts, adj(xs))
+
+
+plot(xs)
+# plot(carrier)
+plot(ys)
+plot(ys_f)
 plt.show()
