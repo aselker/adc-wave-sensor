@@ -4,8 +4,10 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal as sig
+import scipy.interpolate as interp
 
 fs = float(sys.argv[2])  # FPS
+interp_num = 10
 
 xs = []
 ys = []
@@ -28,8 +30,19 @@ else:
     xs = ys
     del ys
 
+
+xs = np.array(xs) - np.mean(xs)  # Remove DC offset
+
+spl = interp.UnivariateSpline(ts, xs)
+ts = np.linspace(ts[0], ts[-1], len(ts) * interp_num)
+xs = spl(ts)
+fs *= interp_num
+
 four = np.fft.rfft(xs)
 freqs = np.fft.rfftfreq(len(xs), 1 / fs)
+# plt.plot(freqs, four)
+# plt.show()
+
 
 # Find the carrier freq and phase by finding the peak that's not next to 0
 # Find the highest point in four where freq >= 5
@@ -51,7 +64,9 @@ plt.plot(freqs, np.fft.rfft(ys))
 plt.show()
 """
 
-filt = sig.butter(4, (7 / fs), analog=False)
+filt = sig.butter(5, (3 / fs), analog=False)
 ys_f = sig.lfilter(filt[0], filt[1], ys)
+# plt.plot(ts, xs / 5)
+# plt.plot(ts, carrier * 10)
 plt.plot(ts, ys_f)
 plt.show()
